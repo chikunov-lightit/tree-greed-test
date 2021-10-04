@@ -1,0 +1,41 @@
+<h2>With two different context menu</h2>
+
+<ejs-contextmenu #columnContextMenu
+                 [items]='columnMenuItems'
+                 (select)="listenColumnMenuEvent($event)">
+</ejs-contextmenu>
+
+<ejs-contextmenu #rowContextMenu
+                 [items]='rowMenuItems'
+                 (select)="listenRowMenuEvent($event)">
+</ejs-contextmenu>
+
+<ejs-treegrid #treegrid
+              [dataSource]='data'
+              [treeColumnIndex]='2'
+              childMapping='subtasks'
+              [allowPaging]="true"
+              [pageSettings]='pageSettings'
+              [allowSorting]="allowSorting"
+              [frozenColumns]='frozenColumns'
+              [allowFiltering]="allowFiltering"
+              [filterSettings]="filterSettings"
+              [contextMenuItems]="null"
+              (contextmenu)="onContextmenu($event)"
+              [editSettings]='editSettings'
+              [allowReordering]="true"
+              allowResizing='true'
+              [allowRowDragAndDrop]='true'
+              [showColumnChooser]='true'
+              [toolbar]="toolbar"
+              [selectionSettings]='selectionSettings'>
+  <e-columns>
+    <ng-container *ngFor="let column of columns">
+      <e-column [field]='column?.field'
+                [headerText]='column?.headerText'
+                [textAlign]='column?.textAlign'
+                [width]="column?.width">
+      </e-column>
+    </ng-container>
+  </e-columns>
+</ejs-treegrid>

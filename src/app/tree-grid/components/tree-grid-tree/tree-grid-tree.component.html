@@ -1,0 +1,43 @@
+<h2>Native context menu</h2>
+
+<ejs-treegrid #treegrid
+              [dataSource]='data'
+              [treeColumnIndex]='1'
+              childMapping='subtasks'
+              [allowPaging]="true"
+              [pageSettings]='pageSettings'
+              [allowSorting]="true"
+              [sortSettings]="sortSettings"
+              [allowFiltering]="true"
+              [filterSettings]="filterSettings"
+              allowExcelExport='false'
+              allowPdfExport='false'
+              [contextMenuItems]="contextMenuItems"
+              [editSettings]='editSettings'
+              [allowReordering]="true"
+              allowResizing='true'
+              [allowRowDragAndDrop]='true'
+              [showColumnChooser]='true'
+              [toolbar]="toolbarOptions"
+              [selectionSettings]='selectionSettings'>
+  <e-columns>
+    <ng-container *ngFor="let column of columns">
+      <e-column [field]='column?.field'
+                [headerText]='column?.headerText'
+                [textAlign]='column?.textAlign'
+                [width]="column?.width">
+        <!--        <ng-template #headerTemplate let-data>-->
+        <!--          <div id="target">-->
+        <!--            {{ column?.headerText }}-->
+        <!--          </div>-->
+        <!--          <ejs-contextmenu id='contextmenu'-->
+        <!--                           target='#target'-->
+        <!--                           [items]='menuItems'-->
+        <!--                           (beforeItemRender)='itemBeforeEvent($event)'-->
+        <!--                           (select)="itemSelect($event)">-->
+        <!--          </ejs-contextmenu>-->
+        <!--        </ng-template>-->
+      </e-column>
+    </ng-container>
+  </e-columns>
+</ejs-treegrid>
