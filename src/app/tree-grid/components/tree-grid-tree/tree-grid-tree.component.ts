@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {EditSettingsModel, FilterSettingsModel, SortSettingsModel, TreeGrid} from '@syncfusion/ej2-angular-treegrid';
 import {SelectionSettingsModel} from '@syncfusion/ej2-treegrid/src/treegrid/models/selection-settings-model';
 import {ContextMenuComponent, MenuEventArgs, MenuItemModel} from '@syncfusion/ej2-angular-navigations';
@@ -10,7 +10,7 @@ import {sampleData} from '../../../helpers/datasource';
   templateUrl: './tree-grid-tree.component.html',
   styleUrls: ['./tree-grid-tree.component.scss']
 })
-export class TreeGridTreeComponent implements OnInit {
+export class TreeGridTreeComponent implements OnInit, AfterViewInit {
   public data: {}[];
   public pageSettings: {};
   public sortSettings: SortSettingsModel;
@@ -57,30 +57,36 @@ export class TreeGridTreeComponent implements OnInit {
     this.sortSettings = {columns: [{field: 'taskName', direction: 'Ascending'}, {field: 'taskID', direction: 'Descending'}]};
     this.filterSettings = {ignoreAccent: true, hierarchyMode: 'Parent'};
     this.contextMenuItems = [
+      {text: 'Column Header', target: '.e-headercell'},
+      {text: 'Row Header', target: '.e-rowdragdropcell'},
       'AutoFit',
-      'AutoFitAll',
-      'SortAscending',
-      'SortDescending',
+      // 'AutoFitAll',
+      // 'SortAscending',
+      // 'SortDescending',
       'Copy',
       'Paste',
       'Edit',
       'Delete',
       'Save',
       'Cancel',
-      'PdfExport',
-      'ExcelExport',
-      'CsvExport',
-      'FirstPage',
-      'PrevPage',
-      'LastPage',
-      'NextPage',
+      // 'PdfExport',
+      // 'ExcelExport',
+      // 'CsvExport',
+      // 'FirstPage',
+      // 'PrevPage',
+      // 'LastPage',
+      // 'NextPage',
       'AddRow'
     ];
-    this.editSettings = {allowDeleting: true, allowEditing: true, allowAdding: true, mode: 'Row'};
+    this.editSettings = {allowDeleting: true, allowEditing: true, allowAdding: true, mode: 'Dialog'};
     this.selectionSettings = {type: 'Multiple', mode: 'Row', enableToggle: true};
     this.toolbarOptions = ['ColumnChooser'];
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    console.log('columns', this.treeGridObj.columns);
   }
 }

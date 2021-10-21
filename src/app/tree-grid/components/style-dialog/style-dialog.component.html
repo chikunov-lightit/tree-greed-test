@@ -1,0 +1,94 @@
+<ejs-dialog #styleDialog
+            [showCloseIcon]='true'
+            width='600px'
+            cssClass='style-dialog'
+            [isModal]="true"
+            header='Style Edit'
+            target='body'
+            [visible]="false">
+  <ng-template #content>
+        <form id="styleForm" class="style-form" ngForm #styleForm>
+
+          <div class="e-form-field">
+            <label class="e-label" for="type">Data Type</label>
+            <ejs-dropdownlist [(ngModel)]="orderData.type"
+                              id="type"
+                              name="type"
+                              [dataSource]="['stringedit', 'numericedit', 'datepickeredit', 'booleanedit', 'dropdownedit']"
+                              [fields]="{text: 'ShipCountry', value: 'ShipCountry' }" floatLabelType='Always'>
+            </ejs-dropdownlist>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="defaultValue">Default Value</label>
+            <input class="e-input e-field" id="defaultValue" name="defaultValue" [(ngModel)]="orderData.defaultValue"
+                   required
+                   type="text"
+                   (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="minWidth">Min Width</label>
+            <ejs-numerictextbox name="minWidth" id="minWidth" [min]='0' [step]="1" [validateDecimalOnType]='true'
+                                format='0'
+                                [(ngModel)]="orderData.minWidth"></ejs-numerictextbox>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="fontSize">Font Size</label>
+            <ejs-numerictextbox name="fontSize" id="fontSize" [min]='0' [max]="56"
+                                [(ngModel)]="orderData.customAttributes.style.fontSize"></ejs-numerictextbox>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="color">Font Color</label>
+            <div class="row">
+              <input ejs-colorpicker name="color" id="color" [(ngModel)]="orderData.customAttributes.style.color"
+                     type="color"/>
+            </div>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="backgroundColor">Background Color</label>
+            <div class="row">
+              <input ejs-colorpicker name="backgroundColor" id="backgroundColor"
+                     [(ngModel)]="orderData.customAttributes.style.backgroundColor"
+                     type="color"/>
+            </div>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="textAlign">Horizontal Align</label>
+            <ejs-dropdownlist [(ngModel)]="orderData.textAlign"
+                              name="textAlign"
+                              id="textAlign"
+                              [dataSource]="['Left', 'Right', 'Center']">
+            </ejs-dropdownlist>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="verticalAlign">Vertical Align</label>
+            <ejs-dropdownlist [(ngModel)]="orderData.customAttributes.style.verticalAlign"
+                              name="verticalAlign"
+                              id="verticalAlign"
+                              [dataSource]="['top', 'center', 'bottom']">
+            </ejs-dropdownlist>
+          </div>
+
+          <div class="e-form-field">
+            <label class="e-label" for="textWrap">Text Wrap</label>
+            <ejs-dropdownlist [(ngModel)]="orderData.customAttributes.style.textWrap"
+                              name="textWrap"
+                              id="textWrap"
+                              [dataSource]="['none', 'normal', 'unrestricted', 'suppress']">
+            </ejs-dropdownlist>
+          </div>
+        </form>
+      </ng-template>
+      <ng-template #footerTemplate>
+        <button type="button" class="e-control e-btn e-lib e-primary e-flat" data-ripple="true">Save</button>
+        <button type="button" class="e-control e-btn e-lib e-flat" data-ripple="true">Cancel</button>
+      </ng-template>
+      <!--  <div class="e-footer-content">-->
+
+      <!--  </div>-->

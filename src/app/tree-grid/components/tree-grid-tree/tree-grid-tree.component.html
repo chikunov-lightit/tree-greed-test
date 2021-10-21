@@ -20,24 +20,27 @@
               [showColumnChooser]='true'
               [toolbar]="toolbarOptions"
               [selectionSettings]='selectionSettings'>
-  <e-columns>
-    <ng-container *ngFor="let column of columns">
-      <e-column [field]='column?.field'
-                [headerText]='column?.headerText'
-                [textAlign]='column?.textAlign'
-                [width]="column?.width">
-        <!--        <ng-template #headerTemplate let-data>-->
-        <!--          <div id="target">-->
-        <!--            {{ column?.headerText }}-->
-        <!--          </div>-->
-        <!--          <ejs-contextmenu id='contextmenu'-->
-        <!--                           target='#target'-->
-        <!--                           [items]='menuItems'-->
-        <!--                           (beforeItemRender)='itemBeforeEvent($event)'-->
-        <!--                           (select)="itemSelect($event)">-->
-        <!--          </ejs-contextmenu>-->
-        <!--        </ng-template>-->
-      </e-column>
-    </ng-container>
-  </e-columns>
+  <!--  <e-columns>-->
+  <!--    <ng-container *ngFor="let column of columns">-->
+  <!--      <e-column [field]='column?.field'-->
+  <!--                [headerText]='column?.headerText'-->
+  <!--                [textAlign]='column?.textAlign'-->
+  <!--                [width]="column?.width">-->
+  <!--        &lt;!&ndash;        <ng-template #headerTemplate let-data>&ndash;&gt;-->
+  <!--        &lt;!&ndash;          <div id="target">&ndash;&gt;-->
+  <!--        &lt;!&ndash;            {{ column?.headerText }}&ndash;&gt;-->
+  <!--        &lt;!&ndash;          </div>&ndash;&gt;-->
+  <!--        &lt;!&ndash;          <ejs-contextmenu id='contextmenu'&ndash;&gt;-->
+  <!--        &lt;!&ndash;                           target='#target'&ndash;&gt;-->
+  <!--        &lt;!&ndash;                           [items]='menuItems'&ndash;&gt;-->
+  <!--        &lt;!&ndash;                           (beforeItemRender)='itemBeforeEvent($event)'&ndash;&gt;-->
+  <!--        &lt;!&ndash;                           (select)="itemSelect($event)">&ndash;&gt;-->
+  <!--        &lt;!&ndash;          </ejs-contextmenu>&ndash;&gt;-->
+  <!--        &lt;!&ndash;        </ng-template>&ndash;&gt;-->
+  <!--      </e-column>-->
+  <!--    </ng-container>-->
+  <!--  </e-columns>-->
 </ejs-treegrid>
+
+<pre>{{treegrid.columns | json}}</pre>
+

@@ -19,8 +19,12 @@ import {
   SortService, ToolbarService, TreeGridModule
 } from '@syncfusion/ej2-angular-treegrid';
 
-// import { enableRipple } from '@syncfusion/ej2-base';
-// enableRipple(true);
+import { enableRipple } from '@syncfusion/ej2-base';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import {ColorPickerModule, NumericTextBoxModule} from '@syncfusion/ej2-angular-inputs';
+import { StyleDialogComponent } from './components/style-dialog/style-dialog.component';
+enableRipple(true);
 
 
 @NgModule({
@@ -29,13 +33,19 @@ import {
     TreeGridSecondComponent,
     TreeGridTreeComponent,
     TreeGridFourComponent,
+    StyleDialogComponent,
   ],
   imports: [
     CommonModule,
     TreeGridModule,
     ContextMenuModule,
     DialogModule,
-    ButtonModule
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DropDownListModule,
+    ColorPickerModule,
+    NumericTextBoxModule
   ],
   providers: [
     PageService,
@@ -52,12 +62,13 @@ import {
     ColumnChooserService,
     ColumnMenuService,
     FreezeService,
-    ToolbarService
+    ToolbarService,
   ],
   exports: [
     TreeGridComponent,
     TreeGridSecondComponent,
-    TreeGridTreeComponent
+    TreeGridTreeComponent,
+    TreeGridFourComponent,
   ]
 })
 export class TreeGridTestModule {

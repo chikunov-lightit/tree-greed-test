@@ -7,12 +7,15 @@ export enum MenuActions {
   freezeColumn = 'freezeColumn',
   filter = 'filter',
   multiSort = 'multiSort',
-  newRow = 'multiSort',
+  newRow = 'newRow',
+  newRowBelow = 'newRowBelow',
+  newRowChild= 'newRowChild',
   delRow = 'delRow',
   editRow = 'editRow',
   multiSelectRow = 'multiSelectRow',
   copyRow = 'copyRow',
   cutRow = 'cutRow',
-  pasteSiblingRow = 'pasteSiblingRow',
-  pasteChildRow = 'pasteChildRow'
+  pasteRow = 'pasteRow',
+  pasteRowSibling = 'pasteRowSibling',
+  pasteRowChild = 'pasteRowChild'
 }

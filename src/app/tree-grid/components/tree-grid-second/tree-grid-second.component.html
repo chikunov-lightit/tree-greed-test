@@ -1,41 +1,324 @@
 <h2>With two different context menu</h2>
 
 <ejs-contextmenu #columnContextMenu
-                 [items]='columnMenuItems'
+                 [items]="columnMenuItems"
+                 (beforeItemRender)="beforeItemRender($event)"
+                 (beforeClose)="beforeClose($event)"
                  (select)="listenColumnMenuEvent($event)">
 </ejs-contextmenu>
 
 <ejs-contextmenu #rowContextMenu
-                 [items]='rowMenuItems'
+                 [items]="rowMenuItems"
+                 (beforeClose)="beforeClose($event)"
                  (select)="listenRowMenuEvent($event)">
 </ejs-contextmenu>
 
+<ejs-treegrid #grid>
+  <e-columns>
+    <e-column field='OrderID' headerText='Order ID' width='120' textAlign='Right'></e-column>
+    <e-column field='CustomerName' headerText='Customer Name' width='150'></e-column>
+    <e-column field='Freight' headerText='Freight' width='120' format='C2' textAlign='Right'></e-column>
+    <e-column field='ShipCity' headerText='Ship City' width='130'></e-column>
+    <e-column field='ShipCountry' headerText='Ship Country' width='150'></e-column>
+  </e-columns>
+</ejs-treegrid>
+
+
 <ejs-treegrid #treegrid
-              [dataSource]='data'
-              [treeColumnIndex]='2'
-              childMapping='subtasks'
+              (keydown)="keyPressHandler($event)"
+              [dataSource]="data"
+              [treeColumnIndex]="2"
+              childMapping="subtasks"
               [allowPaging]="true"
-              [pageSettings]='pageSettings'
+              [pageSettings]="pageSettings"
               [allowSorting]="allowSorting"
-              [frozenColumns]='frozenColumns'
+              [frozenColumns]="frozenColumns"
               [allowFiltering]="allowFiltering"
               [filterSettings]="filterSettings"
               [contextMenuItems]="null"
               (contextmenu)="onContextmenu($event)"
-              [editSettings]='editSettings'
+              [editSettings]="editSettings"
               [allowReordering]="true"
-              allowResizing='true'
-              [allowRowDragAndDrop]='true'
-              [showColumnChooser]='true'
-              [toolbar]="toolbar"
-              [selectionSettings]='selectionSettings'>
+              allowResizing="true"
+              (dataBound)="dataStateChange($event)"
+              (rowDataBound)="rowDataBound($event)"
+              [allowRowDragAndDrop]="true"
+              [showColumnChooser]="true"
+
+              [selectionSettings]="selectionSettings">
+<!--  [columns]="columnsSubject | async"-->
   <e-columns>
-    <ng-container *ngFor="let column of columns">
-      <e-column [field]='column?.field'
-                [headerText]='column?.headerText'
-                [textAlign]='column?.textAlign'
-                [width]="column?.width">
-      </e-column>
-    </ng-container>
+    <e-column field='OrderID' headerText='Order ID' width='120' textAlign='Right'></e-column>
+    <e-column field='CustomerName' headerText='Customer Name' width='150'></e-column>
+    <e-column field='Freight' headerText='Freight' width='120' format='C2' textAlign='Right'></e-column>
+    <e-column field='ShipCity' headerText='Ship City' width='130'></e-column>
+    <e-column field='ShipCountry' headerText='Ship Country' width='150'></e-column>
   </e-columns>
+
+  <!--  [toolbar]="toolbar"-->
+  <!--  <e-columns>-->
+  <!--    <ng-container *ngFor="let column of columnsSubject | async">-->
+  <!--      <e-column [field]='column?.field'-->
+  <!--                [isPrimaryKey]="column?.isPrimaryKey"-->
+  <!--                [editType]="column?.editType"-->
+  <!--                [headerText]='column?.headerText'-->
+  <!--                [textAlign]='column?.textAlign'-->
+  <!--                [customAttributes]="prepareCustomAttributes(column?.customAttributes)"-->
+  <!--                [width]="column?.width">-->
+  <!--      </e-column>-->
+  <!--    </ng-container>-->
+  <!--  </e-columns>-->
+
+  <!--  <ng-template #editSettingsTemplate let-data>-->
+  <!--    <div ngForm #orderForm="ngForm">-->
+
+  <!--      <div class="e-input-group">-->
+  <!--        <input class="e-input e-field" name='type' [(ngModel)]="orderData.type" required type="text"-->
+  <!--               (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>-->
+  <!--      </div>-->
+
+  <!--      <div class="e-input-group">-->
+  <!--        <input class="e-input e-field" name='defaultValue' [(ngModel)]="orderData.defaultValue" required type="text"-->
+  <!--               (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>-->
+  <!--      </div>-->
+
+  <!--      <div class="e-input-group">-->
+  <!--        <input class="e-input e-field" name='minWidth' [(ngModel)]="orderData.minWidth" required type="text"-->
+  <!--               (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>-->
+  <!--      </div>-->
+
+  <!--      &lt;!&ndash;      <div class="e-input-group" [ngClass]= "{'e-disabled': !data.isAdd}">&ndash;&gt;-->
+  <!--      &lt;!&ndash;        <input class="e-input e-field" [(ngModel)]="orderData.type" required [attr.disabled]="!data.isAdd ? '' : null" name='OrderID' type="text" (focus)="focusIn($event.target)"&ndash;&gt;-->
+  <!--      &lt;!&ndash;               (blur)="focusOut($event.target)" #OrderID style="text-align: right"  />&ndash;&gt;-->
+  <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+  <!--      &lt;!&ndash;      <table class="e-table e-inline-edit" cellspacing="0.25">&ndash;&gt;-->
+  <!--      &lt;!&ndash;        <colgroup>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <col style="width: 120px;">&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <col style="width: 120px;">&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <col style="width: 120px;">&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <col style="width: 130px;">&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <col style="width: 150px;">&ndash;&gt;-->
+  <!--      &lt;!&ndash;        </colgroup>&ndash;&gt;-->
+  <!--      &lt;!&ndash;        <tbody>&ndash;&gt;-->
+  <!--      &lt;!&ndash;        <tr>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <td style="text-align: right" class='e-rowcell'>&ndash;&gt;-->
+  <!--      &lt;!&ndash;            <div class="e-input-group" [ngClass]= "{'e-disabled': !data.isAdd}">&ndash;&gt;-->
+  <!--      &lt;!&ndash;              <input class="e-input e-field" [(ngModel)]="orderData.OrderID" required [attr.disabled]="!data.isAdd ? '' : null" name='OrderID' type="text" (focus)="focusIn($event.target)"&ndash;&gt;-->
+  <!--      &lt;!&ndash;                     (blur)="focusOut($event.target)" #OrderID style="text-align: right"  />&ndash;&gt;-->
+  <!--      &lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          </td>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <td class='e-rowcell'>&ndash;&gt;-->
+  <!--      &lt;!&ndash;            <div class="e-input-group">&ndash;&gt;-->
+  <!--      &lt;!&ndash;              <input class="e-input e-field" name='CustomerName' [(ngModel)]="orderData.CustomerName" required type="text" (focus)="focusIn($event.target)"&ndash;&gt;-->
+  <!--      &lt;!&ndash;                     (blur)="focusOut($event.target)" #CustomerName />&ndash;&gt;-->
+  <!--      &lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          </td>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <td style="text-align: right" class='e-rowcell'>&ndash;&gt;-->
+  <!--      &lt;!&ndash;            <ejs-numerictextbox name="Freight" id="Freight" [(ngModel)]="orderData.Freight" floatLabelType='Never'></ejs-numerictextbox>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          </td>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <td style="text-align: right" class='e-rowcell'>&ndash;&gt;-->
+  <!--      &lt;!&ndash;            <ejs-datepicker id="OrderDate" name="OrderDate" required [(ngModel)]="orderData.OrderDate" floatLabelType='Never'></ejs-datepicker>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          </td>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          <td class='e-rowcell'>&ndash;&gt;-->
+  <!--      &lt;!&ndash;            <ejs-dropdownlist id="ShipCountry" name="ShipCountry" [(ngModel)]="orderData.ShipCountry" [dataSource]='shipCountryDistinctData' [fields]="{text: 'ShipCountry', value: 'ShipCountry' }" popupHeight='300px' floatLabelType='Never'></ejs-dropdownlist>&ndash;&gt;-->
+  <!--      &lt;!&ndash;          </td>&ndash;&gt;-->
+  <!--      &lt;!&ndash;        </tr>&ndash;&gt;-->
+  <!--      &lt;!&ndash;        </tbody>&ndash;&gt;-->
+  <!--      &lt;!&ndash;      </table>&ndash;&gt;-->
+  <!--    </div>-->
+  <!--  </ng-template>-->
+
+  <!--  <ng-template #editSettingsTemplate let-data>-->
+  <!--    <div [formGroup]="orderForm">-->
+  <!--      <div class="form-row">-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <div class="e-float-input e-control-wrapper" [ngClass]="{'e-error': OrderID.invalid && (OrderID.dirty || OrderID.touched)}">-->
+  <!--            <input formControlName="OrderID" data-msg-containerid='OrderIDError' id="OrderID" name="OrderID" type="text" [attr.disabled]="!data.isAdd ? '' : null">-->
+  <!--            <span class="e-float-line"></span>-->
+  <!--            <label class="e-float-text e-label-top" for="OrderID"> Order ID</label>-->
+  <!--          </div>-->
+  <!--          <div id="OrderIDError" [style.visibility]='((OrderID.invalid && (OrderID.dirty || OrderID.touched)) || (OrderID.invalid && submitClicked))? "visible": "hidden"'>-->
+  <!--            <label class="e-error" for="OrderID" id="OrderID-info" style="display: block;">*Order ID is required</label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <div class="e-float-input e-control-wrapper" [ngClass]="{'e-error': CustomerName.invalid && (CustomerName.dirty || CustomerName.touched)}">-->
+  <!--            <input formControlName="CustomerName" data-msg-containerid='CustomerNameError' id="CustomerName" name="CustomerName" type="text">-->
+  <!--            <span class="e-float-line"></span>-->
+  <!--            <label class="e-float-text e-label-top" for="CustomerName">Customer Name</label>-->
+  <!--          </div>-->
+  <!--          <div id="CustomerNameError" [style.visibility]='((CustomerName.invalid && (CustomerName.dirty || CustomerName.touched)) || (CustomerName.invalid && submitClicked))? "visible": "hidden"'>-->
+  <!--            <label class="e-error" for="CustomerName" id="CustomerName-info" style="display: block;">*Customer Name is required</label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="form-row">-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <ejs-numerictextbox formControlName="Freight" id="Freight" placeholder="Freight" floatLabelType='Always'></ejs-numerictextbox>-->
+  <!--        </div>-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <ejs-datepicker id="OrderDate" formControlName="OrderDate" placeholder="Order Date" floatLabelType='Always'></ejs-datepicker>-->
+  <!--          <div id="OrderDateError" [style.visibility]='((OrderDate.invalid && (OrderDate.dirty || OrderDate.touched)) || (OrderDate.invalid && submitClicked)) ? "visible": "hidden"'>-->
+  <!--            <label class="e-error" for="OrderDate" id="OrderDate-info" style="display: block;">*Order Date is required</label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="form-row">-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <ejs-dropdownlist id="ShipCountry" formControlName="ShipCountry" [dataSource]='shipCountryDistinctData' [fields]="{text: 'ShipCountry', value: 'ShipCountry' }" placeholder="Ship Country" popupHeight='300px' floatLabelType='Always'></ejs-dropdownlist>-->
+  <!--        </div>-->
+  <!--        <div class="form-group col-md-6">-->
+  <!--          <ejs-dropdownlist id="ShipCity" formControlName="ShipCity" [dataSource]='shipCityDistinctData' [fields]="{text: 'ShipCity', value: 'ShipCity' }" placeholder="Ship City" popupHeight='300px' floatLabelType='Always'></ejs-dropdownlist>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="form-row">-->
+  <!--        <div class="form-group col-md-12">-->
+  <!--          <div class="e-float-input e-control-wrapper">-->
+  <!--            <textarea formControlName="ShipAddress" id="ShipAddress" name="ShipAddress" type="text"></textarea>-->
+  <!--            <span class="e-float-line"></span>-->
+  <!--            <label class="e-float-text e-label-top" for="ShipAddress">Ship Address</label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </ng-template>-->
 </ejs-treegrid>
+
+<pre>{{ columnsSubject | async | json}}</pre>
+
+<ejs-dialog #styleDialog
+            [showCloseIcon]="true"
+            width="600px"
+            cssClass="style-dialog"
+            [isModal]="true"
+            header="Style Edit"
+            target="body"
+            [content]="content"
+            [visible]="false">
+  <ng-template #footerTemplate>
+    <button type="button" class="e-control e-btn e-lib e-primary e-flat" data-ripple="true" (click)="saveStyleForm()">
+      Save
+    </button>
+    <button type="button" class="e-control e-btn e-lib e-flat" data-ripple="true" (click)="cancelStyleForm()">
+      Cancel
+    </button>
+  </ng-template>
+</ejs-dialog>
+
+<ng-template #content>
+  <form id="styleForm" class="style-form" ngForm #styleForm=ngForm>
+
+    <div class="e-form-field">
+      <label class="e-label" for="type">Data Type</label>
+      <ejs-dropdownlist [(ngModel)]="selectedColumnData.editType"
+                        id="type"
+                        name="type"
+                        [fields]="{text: 'text', value: 'value'}"
+                        [dataSource]="[
+                           { text: 'Text', value: 'stringedit'},
+                           { text: 'Number', value: 'numericedit'},
+                           { text: 'Date', value: 'datepickeredit'},
+                           { text: 'Boolean', value: 'booleanedit'},
+                           { text: 'DropDownList', value: 'dropdownedit'},
+                           ]"
+                        floatLabelType="Always">
+      </ejs-dropdownlist>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="defaultValue">Default Value</label>
+      <input class="e-input e-field" id="defaultValue" name="defaultValue" [(ngModel)]="selectedColumnData.defaultValue"
+             required
+             type="text"
+             (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="minWidth">Min Width</label>
+      <ejs-numerictextbox name="minWidth" id="minWidth" [min]="0" [step]="1" [validateDecimalOnType]="true" format="0"
+                          [(ngModel)]="selectedColumnData.minWidth"></ejs-numerictextbox>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="fontSize">Font Size</label>
+      <ejs-numerictextbox name="fontSize" id="fontSize" [min]="0" [max]="56" [validateDecimalOnType]="true" format="0"
+                          [(ngModel)]="selectedColumnData.customAttributes.style.fontSize"></ejs-numerictextbox>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="color">Font Color</label>
+      <div class="row">
+        <input ejs-colorpicker name="color" id="color" [(ngModel)]="selectedColumnData.customAttributes.style.color"
+               type="color"/>
+      </div>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="backgroundColor">Background Color</label>
+      <div class="row">
+        <input ejs-colorpicker name="backgroundColor" id="backgroundColor"
+               [(ngModel)]="selectedColumnData.customAttributes.style.backgroundColor"
+               type="color"/>
+      </div>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="textAlign">Horizontal Align</label>
+      <ejs-dropdownlist [(ngModel)]="selectedColumnData.textAlign"
+                        name="textAlign"
+                        id="textAlign"
+                        [dataSource]="['Left', 'Right', 'Center']">
+      </ejs-dropdownlist>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="verticalAlign">Vertical Align</label>
+      <ejs-dropdownlist [(ngModel)]="selectedColumnData.customAttributes.style.verticalAlign"
+                        name="verticalAlign"
+                        id="verticalAlign"
+                        [dataSource]="['top', 'center', 'bottom']">
+      </ejs-dropdownlist>
+    </div>
+
+    <div class="e-form-field">
+      <label class="e-label" for="textWrap">Text Wrap</label>
+      <ejs-dropdownlist [(ngModel)]="selectedColumnData.customAttributes.style.textWrap"
+                        name="textWrap"
+                        id="textWrap"
+                        [dataSource]="['none', 'normal', 'unrestricted', 'suppress']">
+      </ejs-dropdownlist>
+    </div>
+  </form>
+</ng-template>
+
+<ejs-dialog #columnDialog
+            [showCloseIcon]="true"
+            width="600px"
+            cssClass="style-dialog"
+            [isModal]="true"
+            [header]="isEditColumnMode ? 'Edit Column' : 'Add Column'"
+            target="body"
+            [visible]="false">
+  <ng-template #content>
+    <form id="columnForm" class="style-form" ngForm #columnForm=ngForm>
+
+      <div class="e-form-field">
+        <label class="e-label" for="columnHeaderTitle">Header Title</label>
+        <input class="e-input e-field" id="columnHeaderTitle" name="defaultValue" [(ngModel)]="columnHeaderTitle"
+               required
+               type="text"
+               (focus)="focusIn($event.target)" (blur)="focusOut($event.target)"/>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template #footerTemplate>
+    <button type="button" class="e-control e-btn e-lib e-primary e-flat" data-ripple="true" (click)="saveColumnForm()">
+      Save
+    </button>
+    <button type="button" class="e-control e-btn e-lib e-flat" data-ripple="true" (click)="cancelColumnForm()">
+      Cancel
+    </button>
+  </ng-template>
+</ejs-dialog>
+
+<pre>{{copiedConfig | json}}</pre>

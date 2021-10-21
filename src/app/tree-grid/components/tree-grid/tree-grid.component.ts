@@ -101,28 +101,28 @@ export class TreeGridComponent implements OnInit {
     this.sortSettings = {columns: [{field: 'taskName', direction: 'Ascending'}, {field: 'taskID', direction: 'Descending'}]};
     this.filterSettings = {ignoreAccent: true, hierarchyMode: 'Parent'};
     this.contextMenuItems = [
-      {text: 'Style', iconCss: 'fa fa-shopping-cart'},
-      {text: 'New'},
-      {text: 'Del'},
-      {text: 'Edit'},
-      {text: 'Show'},
-      {text: 'Freeze'},
-      {text: 'Filter'},
-      {text: 'Multi-Sort'},
-      {
-        separator: true,
-      },
-      {text: 'New'},
-      {text: 'Del'},
-      {text: 'Edit'},
-      {text: 'Multi-Select'},
-      {text: 'Copy'},
-      {text: 'Cut'},
-      {text: 'Paste Sibling'},
-      {text: 'Paste Child'},
-      {
-        separator: true,
-      },
+      // {text: 'Style', iconCss: 'fa fa-shopping-cart'},
+      // {text: 'New'},
+      // {text: 'Del'},
+      // {text: 'Edit'},
+      // {text: 'Show'},
+      // {text: 'Freeze'},
+      // {text: 'Filter'},
+      // {text: 'Multi-Sort'},
+      // {
+      //   separator: true,
+      // },
+      // {text: 'New'},
+      // {text: 'Del'},
+      // {text: 'Edit'},
+      // {text: 'Multi-Select'},
+      // {text: 'Copy'},
+      // {text: 'Cut'},
+      // {text: 'Paste Sibling'},
+      // {text: 'Paste Child'},
+      // {
+      //   separator: true,
+      // },
       'AutoFit',
       'AutoFitAll',
       'SortAscending',
@@ -222,9 +222,9 @@ export class TreeGridComponent implements OnInit {
   }
 
   public contextMenuOpen(arg?: BeforeOpenCloseEventArgs): void {
-    if (arg) {
-      arg.cancel = true;
-    }
+    // if (arg) {
+    //   arg.cancel = true;
+    // }
     // const elem: Element = arg?.event?.target as Element;
     // const isHeader = elem?.closest('.e-headercell');
     // console.log('isHeader', isHeader);
@@ -247,26 +247,26 @@ export class TreeGridComponent implements OnInit {
   public onContextmenu(event: MouseEvent): void {
     // event.preventDefault();
     // event.stopImmediatePropagation();
-    console.log('onContextmenu: ', event.target);
-    const elem: Element = event?.target as Element;
-    const columnHeader = elem?.closest('.e-headercell');
-    console.log('Column Header', columnHeader);
-    if (columnHeader) {
-      const index = columnHeader?.getAttribute('aria-colindex');
-      console.log('Column index', index);
-      this.contextmenu.target = elem.id;
-      this.contextmenu.open(event.y, event.x);
-      return;
-    }
-    //
-    const rowHeader = elem?.closest('.e-rowdragdropcell');
-    console.log('Row Header', rowHeader);
-    if (rowHeader) {
-      const index = rowHeader?.closest('.e-row')?.getAttribute('aria-rowindex');
-      console.log('Row index', index);
-      this.contextmenu.target = elem.id;
-      this.contextmenu.open(event.y, event.x);
-    }
+    // console.log('onContextmenu: ', event.target);
+    // const elem: Element = event?.target as Element;
+    // const columnHeader = elem?.closest('.e-headercell');
+    // console.log('Column Header', columnHeader);
+    // if (columnHeader) {
+    //   const index = columnHeader?.getAttribute('aria-colindex');
+    //   console.log('Column index', index);
+    //   this.contextmenu.target = elem.id;
+    //   this.contextmenu.open(event.y, event.x);
+    //   return;
+    // }
+    // //
+    // const rowHeader = elem?.closest('.e-rowdragdropcell');
+    // console.log('Row Header', rowHeader);
+    // if (rowHeader) {
+    //   const index = rowHeader?.closest('.e-row')?.getAttribute('aria-rowindex');
+    //   console.log('Row index', index);
+    //   this.contextmenu.target = elem.id;
+    //   this.contextmenu.open(event.y, event.x);
+    // }
   }
 
   public showColumnChooser(): void {
